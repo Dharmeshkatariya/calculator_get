@@ -16,21 +16,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Calculator(title: 'CALCULATOR'),
+      home: Calculator(title: 'CALCULATOR'),
     );
   }
 }
 
-class Calculator extends StatefulWidget {
-  const Calculator({super.key, required this.title});
+class Calculator extends StatelessWidget {
+  Calculator({super.key, required this.title});
 
   final String title;
 
-  @override
-  State<Calculator> createState() => _CalculatorState();
-}
-
-class _CalculatorState extends State<Calculator> {
   final _calculatorController = Get.put(CalculatorController());
 
   @override
@@ -158,6 +153,7 @@ class _CalculatorState extends State<Calculator> {
       ],
     );
   }
+
   Widget _row0() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,6 +182,7 @@ class _CalculatorState extends State<Calculator> {
       ],
     );
   }
+
   Widget _customWidget({required String title, required Color color}) {
     return GestureDetector(
       onTap: () {

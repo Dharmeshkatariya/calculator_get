@@ -1,3 +1,4 @@
+import 'package:calculator_getx/route/nameroute.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,8 +7,10 @@ import 'controller/calculator_controller.dart';
 void main() {
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -16,58 +19,59 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Calculator(title: 'CALCULATOR'),
+      home: Calculator(),
+      getPages:[ GetPage(
+          name: NameRoute.calculator,
+          page: ()=>Calculator())]
     );
   }
 }
 
-class Calculator extends StatelessWidget {
-  Calculator({super.key, required this.title});
-
-  final String title;
-
-  final _calculatorController = Get.put(CalculatorController());
+class Calculator extends GetView<CalculatorController> {
+  Calculator({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Obx(() => Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Container(
-                alignment: Alignment.centerRight,
-                height: 200,
-                width: double.infinity,
-                color: Colors.black,
-                child: Text(
-                  "\n${_calculatorController.outputResult}",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 39),
-                ),
-              ),
-            ),
-            Expanded(
-                flex: 2,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10, horizontal: 10),
-                  color: Colors.cyan.shade50,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _rowac(),
-                      _row7(),
-                      _row4(),
-                      _row1(),
-                      _row0(),
-                    ],
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    height: 200,
+                    width: double.infinity,
+                    color: Colors.black,
+                    child: Text(
+                      "\n${controller.outputResult}",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 39),
+                    ),
                   ),
-                ))
-          ],
-        )));
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      color: Colors.cyan.shade50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _rowac(),
+                          _row7(),
+                          _row4(),
+                          _row1(),
+                          _row0(),
+                        ],
+                      ),
+                    ))
+              ],
+            )));
   }
 
   Widget _rowac() {
@@ -76,7 +80,7 @@ class Calculator extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            _calculatorController.outputResult.value = "0";
+            controller.outputResult.value = "0";
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -95,8 +99,7 @@ class Calculator extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            _calculatorController
-                .textPress(_calculatorController.outputResult.value);
+            controller.textPress(controller.outputResult.value);
           },
           child: Container(
             decoration: BoxDecoration(
@@ -162,7 +165,7 @@ class Calculator extends StatelessWidget {
         _customWidget(title: '.', color: Colors.black38),
         GestureDetector(
           onTap: () {
-            _calculatorController.separate();
+            controller.separate();
           },
           child: Container(
             decoration: BoxDecoration(
@@ -186,7 +189,7 @@ class Calculator extends StatelessWidget {
   Widget _customWidget({required String title, required Color color}) {
     return GestureDetector(
       onTap: () {
-        _calculatorController.numberPress(title);
+        controller.numberPress(title);
       },
       child: Container(
         decoration: BoxDecoration(

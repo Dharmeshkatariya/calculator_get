@@ -1,6 +1,11 @@
 # calculator_getx
 
-A new Flutter project.
+complete working calculator with batter UI and logic 
+
+more about this project
+
+✔️ getx state management use
+
 
 ## Getting Started
 
